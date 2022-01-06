@@ -1,5 +1,10 @@
 const initialState = {
-    list:[],
+    list:[
+        {
+            title: 'redux',
+            id: 1,
+        }
+    ],
 }
 
 const todoReducer = (state = initialState, action) => {

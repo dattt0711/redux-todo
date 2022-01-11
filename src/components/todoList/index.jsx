@@ -5,17 +5,18 @@ import EditIcon from '@mui/icons-material/Edit';
 import { pink } from '@mui/material/colors';
 import {Grid, Paper, Typography} from '@mui/material';
 function TodoList(props) {
-    const {todoList, handleDeleteClick, handleEditClick} = props;
-    const editTodo = (index) =>{
+    const {todoList, handleDeleteClick, handleEditClick, handleClickOpenEditDialog} = props;
+    const editTodo = (id) =>{
         const newTitle = prompt('Enter new title here: ');
-        return handleEditClick(newTitle, index);
+        handleClickOpenEditDialog();
+        if(newTitle != null) return handleEditClick(newTitle, id);
     }
     return (
         <div>
             <Grid container direction="column" style={{marginTop:"2rem"}} spacing={2}>
                 {todoList.map((todo, index) => {
                     return(
-                        <Grid item key={todo.id}>
+                        <Grid item key={todo._id}>
                             <Paper style={{ padding: '0.8rem' }}>
                                 <Grid container justifyContent="space-between">
                                     <Grid item>
@@ -24,10 +25,10 @@ function TodoList(props) {
                                         </Typography>
                                     </Grid>
                                     <Grid item>
-                                        <span onClick={() => handleDeleteClick(index)} style={{ padding: '0 10px', cursor: 'pointer' }}>
+                                        <span onClick={() => handleDeleteClick(todo._id)} style={{ padding: '0 10px', cursor: 'pointer' }}>
                                             <DeleteIcon sx={{ color: pink[500] }} />
                                         </span>
-                                        <button onClick={() => editTodo(index)}>
+                                        <button onClick={() => editTodo(todo._id)}>
                                             <EditIcon color="primary" />
                                         </button>
                                     </Grid>
@@ -37,19 +38,6 @@ function TodoList(props) {
                     )
                 })}
             </Grid>
-            {/* <ul>
-                {todoList.map((todo, index) =>
-                    <li key={todo.id}>
-                        {todo.title}
-                        <span onClick={()=>handleDeleteClick(index)} style={{padding: '0 10px', cursor: 'pointer'}}>
-                            <DeleteIcon sx={{ color: pink[500] }} />
-                        </span>
-                        <button onClick={()=>editTodo(index)}>
-                            <EditIcon color="primary"/>
-                        </button>
-                    </li>
-                )}
-            </ul> */}
         </div>
     );
 }
